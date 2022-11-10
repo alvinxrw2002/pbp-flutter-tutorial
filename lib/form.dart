@@ -15,6 +15,7 @@ class _MyFormPageState extends State<MyFormPage> {
   bool jenjangMagister = false;
   bool jenjangDoktor = false;
   double umur = 0;
+  int umurInt = 0;
   String kelasPBP = 'A';
   List<String> listKelasPBP = ['A', 'B', 'C', 'D', 'E', 'F', 'KI'];
   bool _nilaiSwitch = false;
@@ -36,7 +37,7 @@ class _MyFormPageState extends State<MyFormPage> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: Text('Form'),
+          title: const Text('Form'),
         ),
         body: Form(
           key: _formKey,
@@ -157,6 +158,7 @@ class _MyFormPageState extends State<MyFormPage> {
                       onChanged: (double value) {
                         setState(() {
                           umur = value;
+                          umurInt = value.toInt();
                         });
                       },
                     ),
@@ -192,10 +194,6 @@ class _MyFormPageState extends State<MyFormPage> {
                     secondary: const Icon(Icons.run_circle_outlined),
                   ),
                   TextButton(
-                    child: const Text(
-                      "Simpan",
-                      style: TextStyle(color: Colors.white),
-                    ),
                     style: ButtonStyle(
                       backgroundColor: MaterialStateProperty.all(Colors.blue),
                     ),
@@ -209,37 +207,35 @@ class _MyFormPageState extends State<MyFormPage> {
                                 borderRadius: BorderRadius.circular(10),
                               ),
                               elevation: 15,
-                              child: Container(
-                                child: ListView(
-                                  padding: const EdgeInsets.only(
-                                      top: 20, bottom: 20),
-                                  shrinkWrap: true,
-                                  children: <Widget>[
-                                    Center(child: const Text('Informasi Data')),
-                                    SizedBox(height: 20),
-                                    // TODO: Munculkan informasi yang didapat dari form
-                                    Text("Nama Lengkap: $_namaLengkap"),
-                                    Text("Jenjang: " + getJenjang()),
-                                    Text("Umur: $umur tahun"),
-                                    Text("Kelas: $kelasPBP"),
-                                    Text("Practice Mode: " +
-                                        (_nilaiSwitch
-                                            ? "enabled"
-                                            : "disabled")),
-                                    TextButton(
-                                      onPressed: () {
-                                        Navigator.pop(context);
-                                      },
-                                      child: Text('Kembali'),
-                                    ),
-                                  ],
-                                ),
+                              child: ListView(
+                                padding: const EdgeInsets.only(
+                                    top: 20, bottom: 20),
+                                shrinkWrap: true,
+                                children: <Widget>[
+                                  const Center(child: Text('Informasi Data')),
+                                  const SizedBox(height: 20),
+                                  Text("Nama Lengkap: $_namaLengkap"),
+                                  Text("Jenjang: ${getJenjang()}"),
+                                  Text("Umur: $umurInt tahun"),
+                                  Text("Kelas: $kelasPBP"),
+                                  Text("Practice Mode: ${_nilaiSwitch ? "enabled" : "disabled"}"),
+                                  TextButton(
+                                    onPressed: () {
+                                      Navigator.pop(context);
+                                    },
+                                    child: const Text('Kembali'),
+                                  ),
+                                ],
                               ),
                             );
                           },
                         );
                       }
                     },
+                    child: const Text(
+                      "Simpan",
+                      style: TextStyle(color: Colors.white),
+                    ),
                   ),
                 ],
               ),
